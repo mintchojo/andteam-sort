@@ -10,6 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    min-height: 100dvh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -18,6 +19,7 @@ body {
     width: 100%;
     max-width: 440px;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,7 +30,6 @@ body {
     /* background-color: #dbf0de; */
     width: 280px;
     height: 600px;
-    perspective: 1000px;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
