@@ -1,3 +1,26 @@
+const SUPABASE_URL = 'https://zhhnrctnawlwixkbouiv.supabase.co/';
+const SUPABASE_KEY = 'sb_publishable_GPNbcUjNaXy_uIEUSvaelA_hfaldyHN';
+
+let optOut = false;
+
+document.getElementById('consent-btn').addEventListener('click', () => {
+    optOut = document.getElementById('opt-out').checked;
+    document.getElementById('consent-overlay').classList.add('hidden');
+});
+
+function saveRanking(list) {
+    fetch(`${SUPABASE_URL}/rest/v1/rankings`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ ranking: list.map(s => s.id) }),
+        keepalive: true
+    }).catch(() => {});
+}
+
 let items = songs.map((songName, idx) => ({ id: idx + 1, title: songName }));
 
 for (let i = items.length - 1; i > 0; i--) {
@@ -21,11 +44,11 @@ const progressText = document.getElementById('progress-text');
 
 const params = new URLSearchParams(location.search);
 
-if (params.has('debug')) {
-    showFinalResults(items);
-} else {
-    startNextInsertion();
-}
+// if (params.has('debug')) {
+//     showFinalResults(items);
+// } else {
+//     startNextInsertion();
+// }
 
 function remainingComparisons() {
     let total = 0;
@@ -50,6 +73,7 @@ function startNextInsertion() {
     if (queue.length === 0) {
         current = null;
         updateProgressBar();
+        if (!optOut) saveRanking(ranked);
         showFinalResults(ranked);
         return;
     }

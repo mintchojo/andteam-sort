@@ -194,3 +194,52 @@ body {
 .insta-link {
     color: #9bc9db;
 }
+
+.consent-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: #97979775;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;   /* above the OR circle */
+}
+
+.consent-overlay.hidden {
+    display: none;
+}
+
+.consent-box {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 24px 20px;
+    max-width: 320px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #282828;
+    text-align: center;
+}
+
+.consent-box p {
+    margin-bottom: 12px;
+}
+
+.consent-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    cursor: pointer;
+}
+
+.consent-button {
+    color: #282828;
+    background-color: #ffffff;
+    border: 1px solid #282828;
+    border-radius: 10px;
+    padding: 12px 36px;
+    cursor: pointer;
+    font-family: inherit;
+}
