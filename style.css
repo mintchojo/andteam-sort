@@ -16,7 +16,7 @@ body {
 .mobile-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 375px;
+    max-width: 440px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -35,6 +35,10 @@ body {
     align-items: center;
     padding: 40px 16px;
     text-align: center;
+}
+
+.description {
+    margin-top: 90px;
 }
 
 #progress-container {
@@ -70,11 +74,32 @@ body {
 .choices-container {
     /* background-color: #ffffff; */
     display: flex;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
     max-width: 600px;
     margin-top: 20px;
     margin-bottom: 15px;
+    position: relative;
+}
+
+.or-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #9bc9db;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+    border: 7px solid #ffffff;
 }
 
 .choice-box {
@@ -83,7 +108,8 @@ body {
     height: 150px;
     background-color: #ffffff;
     border: 1px solid #282828;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 15px;
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
@@ -108,8 +134,10 @@ body {
 }
 
 .skip-button {
+    color: #282828;
     background-color: #ffffff;
     border: 1px solid #282828;
+    border-radius: 10px;
     padding: 12px 36px;
     cursor: pointer;
 }
@@ -131,7 +159,7 @@ body {
 .results-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.55rem;
 }
 
 .results-table td {
@@ -140,24 +168,18 @@ body {
     vertical-align: top;
 }
 
+.results-table td.empty {
+    border-color: transparent;
+}
+
 .rank-cell {
-    width: 32px;
+    width: 15px;
     text-align: center;
     padding-right: 10px;
 }
 
 .song-cell {
     text-align: left;
-}
-
-.rank-again-button {
-    font-size: 0.7rem;
-    background-color: #ffffff;
-    border: 1px solid #282828;
-    padding: 10px 30px;
-    cursor: pointer;
-    margin-top: 15px;
-    flex-shrink: 0;
 }
 
 .socials-container {
@@ -170,6 +192,4 @@ body {
 
 .insta-link {
     color: #9bc9db;
-    padding-top: 10px;
-    padding-bottom: 5px;
 }

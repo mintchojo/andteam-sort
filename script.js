@@ -93,25 +93,39 @@ skipBtn.addEventListener('click', () => {
 });
 
 function showFinalResults(sortedArray) {
-    let rowsHTML = '';
-    let currentRank = 1;
+    const n = sortedArray.length;
 
-    for (let i = 0; i < sortedArray.length; i++) {
+    const ranks = [];
+    let currentRank = 1;
+    for (let i = 0; i < n; i++) {
         const prev = sortedArray[i - 1];
         if (!(i > 0 && prev.tiedWith && prev.tiedWith.includes(sortedArray[i].id))) {
             currentRank = i + 1;
         }
+        ranks.push(currentRank);
+    }
 
-        rowsHTML += `
-            <tr>
-                <td class="rank-cell">${currentRank}</td>
-                <td class="song-cell">${sortedArray[i].title}</td>
-            </tr>
-        `;
+    const ROWS_PER_LIST = 27;
+    const rows = Math.max(ROWS_PER_LIST, Math.ceil(n / 2));
+
+    let rowsHTML = '';
+    for (let r = 0; r < rows; r++) {
+        let cells = '';
+        for (let col = 0; col < 2; col++) {
+            const i = col * rows + r;
+            if (i < n) {
+                cells += `<td class="rank-cell">${ranks[i]}</td>
+                          <td class="song-cell">${sortedArray[i].title}</td>`;
+            } else {
+                cells += `<td class="rank-cell empty"></td>
+                          <td class="song-cell empty"></td>`;
+            }
+        }
+        rowsHTML += `<tr>${cells}</tr>`;
     }
 
     document.querySelector('.ui-container').innerHTML = `
-        <p class="results-heading">final ranking</p>
+        <a class="results-heading">final ranking</a>
         <div class="results-scroll">
             <table class="results-table">
                 <tbody>${rowsHTML}</tbody>
