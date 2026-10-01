@@ -1,0 +1,175 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #e6e3e1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mobile-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 375px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-container {
+    /* background-color: #dbf0de; */
+    width: 280px;
+    height: 600px;
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+    padding: 40px 16px;
+    text-align: center;
+}
+
+#progress-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 5px;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#progress-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #9cdac5;
+    border-radius: 3px;
+    transition: width 0.25s ease-out;
+}
+
+#progress-text {
+    font-size: 0.7rem;
+    color: #555555;
+}
+
+.choices-container {
+    /* background-color: #ffffff; */
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.choice-box {
+    flex: 1 1 0%; 
+    min-width: 0; 
+    height: 150px;
+    background-color: #ffffff;
+    border: 1px solid #282828;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.song-title {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    width: 100%;
+    
+    word-wrap: break-word;
+    word-break: normal;
+    overflow: hidden;
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.skip-button {
+    background-color: #ffffff;
+    border: 1px solid #282828;
+    padding: 12px 36px;
+    cursor: pointer;
+}
+
+.results-heading {
+    margin-bottom: 10px;
+    color: #282828;
+}
+
+.results-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.results-table td {
+    padding: 2px 4px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    vertical-align: top;
+}
+
+.rank-cell {
+    width: 32px;
+    text-align: center;
+    padding-right: 10px;
+}
+
+.song-cell {
+    text-align: left;
+}
+
+.rank-again-button {
+    font-size: 0.7rem;
+    background-color: #ffffff;
+    border: 1px solid #282828;
+    padding: 10px 30px;
+    cursor: pointer;
+    margin-top: 15px;
+    flex-shrink: 0;
+}
+
+.socials-container {
+    font-size: 0.7rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.insta-link {
+    color: #9bc9db;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
