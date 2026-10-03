@@ -1,0 +1,172 @@
+.nav-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: auto;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    opacity: 0.4;
+    font-size: 0.65rem;
+    font-family: inherit;
+    color: #282828;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-button img {
+    display: block;
+    width: 50px;
+    height: 30px;
+    opacity: 0.3;
+    animation: nudge 1.8s ease-in-out infinite;
+}
+
+.nav-button.up img {
+    transform: rotate(180deg);
+}
+
+.nav-button.up {
+    margin-top: 0px;
+}
+
+.results-pager {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+}
+.results-pager::-webkit-scrollbar { display: none; }
+
+.results-page {
+    height: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.results-page .results-scroll {
+    overflow: visible;
+    flex: 0 0 auto;
+}
+
+.results-heading.public {
+    padding-top: 0px;
+    color: var(--ink);
+    margin-bottom: 0px;
+}
+
+.public-results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #282828;
+}
+
+.section-label {
+    font-size: 0.7rem;
+    color: #555555;
+    margin: 10px 0 5px;
+}
+
+.section-label.sub {
+    font-size: 0.7rem;
+    color: #555555;
+    margin: 12px 0 5px;
+}
+
+.podium {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    width: 100%;
+    padding-bottom: 4px;
+}
+
+.podium-slot {
+    flex: 1;
+    min-width: 0;
+    height: 62px;
+    border: 1px solid #282828;
+    border-radius: 6px;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    font-size: 0.6rem;
+    line-height: 1.25;
+}
+
+.podium-slot.first {
+    height: 72px;
+}
+
+.podium-slot.third {
+    height: 58px;
+}
+
+.podium-rank {
+    font-weight: 600;
+    font-size: 0.6rem;
+    color: #9bc9db;
+}
+
+.podium-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+.podium-avg {
+    font-size: 0.55rem; color: #555555;
+}
+
+.top-rows {
+    width: 100%;
+}
+
+.top-row {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    gap: 6px;
+    align-items: baseline;
+    text-align: left;
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.55rem;
+}
+.top-row .avg {
+    color: #555555;
+    font-size: 0.65rem;
+    white-space: nowrap;
+}
+
+.taste-label {
+    margin-top: 0px;
+    font-weight: 600;
+    color: var(--blue);
+    font-size:0.8rem;
+}
+
+.taste-note {
+    font-size: 0.65rem;
+    color: #555555;
+    margin-top: 2px;
+}
+
+.taste-fact {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.6rem;
+    opacity: 0.7;
+}

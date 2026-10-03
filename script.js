@@ -1,4 +1,4 @@
-const SUPABASE_URL = 'https://zhhnrctnawlwixkbouiv.supabase.co/';
+const SUPABASE_URL = 'https://zhhnrctnawlwixkbouiv.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_GPNbcUjNaXy_uIEUSvaelA_hfaldyHN';
 
 let optOut = false;
@@ -43,12 +43,6 @@ const progressFill = document.getElementById('progress-fill');
 const progressText = document.getElementById('progress-text');
 
 const params = new URLSearchParams(location.search);
-
-// if (params.has('debug')) {
-//     showFinalResults(items);
-// } else {
-//     startNextInsertion();
-// }
 
 function remainingComparisons() {
     let total = 0;
@@ -148,14 +142,146 @@ function showFinalResults(sortedArray) {
         rowsHTML += `<tr>${cells}</tr>`;
     }
 
-    document.querySelector('.ui-container').innerHTML = `
-        <a class="results-heading">final ranking</a>
-        <div class="results-scroll">
-            <table class="results-table">
-                <tbody>${rowsHTML}</tbody>
-            </table>
+    const ui = document.querySelector('.ui-container');
+    ui.replaceChildren(document.getElementById('results-template').content.cloneNode(true));
+    document.getElementById('results-body').innerHTML = rowsHTML;
+    setupPager(sortedArray);
+}
+
+function setupPager(mine) {
+    const pager = document.getElementById('results-pager');
+
+    document.getElementById('nav-down').addEventListener('click', () =>
+        pager.scrollTo({ top: pager.clientHeight, behavior: 'smooth' }));
+    document.getElementById('nav-up').addEventListener('click', () =>
+        pager.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            observer.disconnect();
+            loadPublicResults(mine);
+        }
+    }, { root: pager, threshold: 0.5 });
+    observer.observe(document.getElementById('page-all'));
+}
+
+function mockBoard() {
+    return [...items].sort(() => Math.random() - 0.5).map((s, i) => ({
+        id: s.id, title: s.title, avg_rank: i + 1 + Math.random(), times_ranked: 123
+    }));
+}
+
+async function loadPublicResults(mine) {
+    const box = document.getElementById('public-results');
+
+    if (params.has('debug')) {
+        renderPublic(box, mockBoard(), mine);
+        return;
+    }
+
+    try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/public_leaderboard`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+            body: '{}'
+        });
+        if (!res.ok) throw new Error(res.status);
+        const board = await res.json();
+        const titleById = new Map(items.map(s => [s.id, s.title]));
+        board.forEach(s => s.title = titleById.get(s.id));
+
+        if (board.length < 10) {
+            box.textContent = 'not enough rankings yet, check back soon!';
+            return;
+        }
+        renderPublic(box, board, mine);
+    } catch (e) {
+        box.textContent = "couldn't load results right now";
+    }
+}
+
+function renderPublic(box, board, mine) {
+    board.forEach(s => s.avg_rank = Number(s.avg_rank));
+    const byAvg = [...board].sort((a, b) => a.avg_rank - b.avg_rank || a.id - b.id);
+    const popRank = new Map(byAvg.map((s, i) => [s.id, i + 1]));
+    const avgById = new Map(board.map(s => [s.id, s.avg_rank]));
+
+    const slot = (s, place, cls) => `
+        <div class="podium-slot ${cls}">
+            <div class="podium-rank">${place}</div>
+            <div class="podium-title">${s.title}</div>
+        </div>`;
+
+    const topRows = mine.slice(0, 10).map((s, i) => `
+        <div class="top-row">
+            <span>${i + 1}</span>
+            <span>${s.title}</span>
+            <span class="avg">#${popRank.get(s.id) ?? '–'}</span>
+        </div>`).join('');
+
+    const fanRows = byAvg.slice(3, 10).map((s, i) => `
+        <div class="top-row">
+            <span>${i + 4}</span>
+            <span>${s.title}</span>
+        </div>`).join('');
+            
+    const { label, note } = tasteLabel(mine, byAvg, popRank);
+
+    box.innerHTML = `
+        <div class="section-label">top 10 among fans (${board[0].times_ranked} rankings)</div>
+        <div class="podium">
+            ${slot(byAvg[1], 2, '')}${slot(byAvg[0], 1, 'first')}${slot(byAvg[2], 3, 'third')}
         </div>
-    `;
+        <div class="top-rows fan-rows">${fanRows}</div>
+        <div class="section-label sub">your top 10 vs. fans</div>
+        <div class="top-rows">${topRows}</div>
+        <div class="section-label sub">your fandom match</div>
+        <div class="taste-label">${label}</div>
+        <div class="taste-note">${note}</div>`;
+}
+
+const MY_TOP = 10;
+const FANDOM_TOP = 10;
+const FANDOM_K = 10;
+
+const TASTE_TIERS = [
+    { min: 0.830,     label: 'same wavelength',      line: "your list is basically the consensus" },
+    { min: 0.767,     label: 'in the loop',      line: "you're with the crowd on most of it" },
+    { min: 0.700,     label: 'a little different', line: "you might have some hot takes" },
+    { min: -Infinity, label: 'offbeat',          line: "your favorites are uniquely your own" }
+];
+
+function tasteScore(mine, byAvg) {
+    const n = mine.length;
+    const myPos = new Map(mine.map((s, i) => [s.id, i + 1]));
+    let total = 0, wsum = 0;
+    byAvg.slice(0, FANDOM_K).forEach((s, i) => {
+        const w = 1 / Math.log2(i + 2);
+        const pos = myPos.get(s.id) ?? n;
+        total += w * ((pos - 1) / (n - 1));
+        wsum += w;
+    });
+    return 1 - total / wsum;
+}
+
+function tasteFact(mine, popRank) {
+    const top = mine[0];
+    const fanRank = popRank.get(top.id);
+    if (fanRank === undefined) return '';
+    if (fanRank === 1) return `your #1 is the fandom's #1 too`;
+    return `your #1, ${top.title}, is the fandom's #${fanRank}`;
+}
+
+function tasteLabel(mine, byAvg, popRank) {
+    if (mine.length < MY_TOP || byAvg.length < FANDOM_K) return { label: '', note: '' };
+
+    const score = tasteScore(mine, byAvg);
+    const tier = TASTE_TIERS.find(t => score >= t.min);
+
+    return {
+        label: tier.label,
+        note: `${tier.line}<br><span class="taste-fact">${tasteFact(mine, popRank)}</span>`
+    };
 }
 
 startNextInsertion();

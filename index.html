@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&team song sorter</title>
     <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="results-page.css"> 
 </head>
 <body>
 
     <div class="consent-overlay" id="consent-overlay">
         <div class="consent-box">
             <p>
-                this sorter is <b>just for fun</b>! when you finish, only your final
-                ranking is collected.
-                no names or account info.
+                this sorter is <b>just for fun</b>!
+                your final ranking is saved anonymously to help build the overall ranking.
             </p>
 
             <label class="consent-check">
@@ -59,6 +59,34 @@
             <a class="insta-link" href="https://www.instagram.com/alwayswichu/">alwayswichu on ig</a>
             <a>@mintchojo</a>
         </p>
+
+        <template id="results-template">
+            <div class="results-pager" id="results-pager">
+
+                <section class="results-page" id="page-mine">
+                    <a class="results-heading">final ranking</a>
+                    <div class="results-scroll">
+                        <table class="results-table">
+                            <tbody id="results-body"></tbody>
+                        </table>
+                    </div>
+                    <button class="nav-button" id="nav-down" aria-label="see results">
+                        scroll to see your ranking compared to others!
+                        <img src="arrow.png" alt="">
+                    </button>
+                </section>
+
+                <section class="results-page" id="page-all">
+                    <button class="nav-button up" id="nav-up" aria-label="back to your ranking">
+                        <img src="arrow.png" alt="">
+                        back to your ranking
+                    </button>
+                    <a class="results-heading public">public ranking</a>
+                    <div id="public-results" class="public-results">loading...</div>
+                </section>
+
+            </div>
+        </template>
     </div>
     <script src="data.js"></script>
     <script src="script.js"></script>

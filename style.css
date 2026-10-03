@@ -1,3 +1,9 @@
+:root {
+    --blue: #9bc9db;
+    --ink: #282828;
+    --mint: #9cdac5;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -27,14 +33,12 @@ body {
 }
 
 .ui-container {
-    /* background-color: #dbf0de; */
     width: 280px;
     height: 600px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     align-items: center;
-    padding: 40px 16px;
+    padding: 0px 16px 0px;
     text-align: center;
 }
 
@@ -73,7 +77,6 @@ body {
 }
 
 .choices-container {
-    /* background-color: #ffffff; */
     display: flex;
     gap: 10px;
     width: 100%;
@@ -145,7 +148,8 @@ body {
 
 .results-heading {
     margin-bottom: 10px;
-    color: #282828;
+    padding-top: 40px;
+    color: var(--ink);
 }
 
 .results-scroll {
@@ -184,10 +188,11 @@ body {
 }
 
 .socials-container {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     align-items: center;
     display: flex;
     flex-direction: column;
+    gap: 4px;
     padding: 4px;
 }
 
@@ -203,7 +208,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    z-index: 100;   /* above the OR circle */
+    z-index: 100;
 }
 
 .consent-overlay.hidden {
