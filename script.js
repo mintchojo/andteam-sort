@@ -245,9 +245,9 @@ const FANDOM_TOP = 10;
 const FANDOM_K = 10;
 
 const TASTE_TIERS = [
-    { min: 0.830,     label: 'same wavelength',      line: "your list is basically the consensus" },
-    { min: 0.767,     label: 'in the loop',      line: "you're with the crowd on most of it" },
-    { min: 0.700,     label: 'a little different', line: "you might have some hot takes" },
+    { min: 0.801,     label: 'same wavelength',      line: "your list is basically the consensus" },
+    { min: 0.726,     label: 'in the loop',      line: "you're with the crowd on most of it" },
+    { min: 0.635,     label: 'a little different', line: "you might have some hot takes" },
     { min: -Infinity, label: 'offbeat',          line: "your favorites are uniquely your own" }
 ];
 
